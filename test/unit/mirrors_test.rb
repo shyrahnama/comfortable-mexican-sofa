@@ -76,9 +76,9 @@ class MirrorsTest < ActiveSupport::TestCase
       :layout => layout_1b
     )
     page_2b.reload
-    assert_equal 'updated', page_2b.slug
+    assert_equal page_1b.id, page_2b.mirror_page_id
+    assert_equal page_2b.id, page_1b.mirror_page_id
     assert_equal page_2a, page_2b.parent
-    assert_equal '/test_a/updated', page_2b.full_path
     assert_equal layout_2b, page_2b.layout
   end
   
