@@ -50,7 +50,7 @@ module ComfortableMexicanSofa::IsMirrored
             :mirror_page_id => self.id,
             :slug       => m.slug.present? ? m.slug : self.slug,
             :label      => m.label.present? ? m.label : (self.slug.blank?? self.label : m.label),
-            :parent_id  => site.pages.find_by_full_path(self.parent.try(:full_path)).try(:id),
+            :parent_id  => site.pages.find_by_mirror_page_id(self.parent.try(:mirror_page_id)).try(:id),
             :layout     => site.layouts.find_by_identifier(self.layout.try(:identifier))
           }
           m
