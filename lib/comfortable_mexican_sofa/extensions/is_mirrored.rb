@@ -23,7 +23,7 @@ module ComfortableMexicanSofa::IsMirrored
       (Cms::Site.mirrored - [self.site]).collect do |site|
         case self
           when Cms::Layout  then site.layouts.find_by_identifier(self.identifier)
-          when Cms::Page    then site.pages.find_by_full_path(self.full_path) || site.pages.find_by_mirror_page_id(self.id)
+          when Cms::Page    then site.pages.find_by_full_path(self.full_path) || site.pages.find_by_mirror_page_id(self.mirror_page_id)
           when Cms::Snippet then site.snippets.find_by_identifier(self.identifier)
         end
       end.compact
