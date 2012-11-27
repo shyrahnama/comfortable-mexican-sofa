@@ -24,6 +24,7 @@ class Cms::Page < ActiveRecord::Base
                   :blocks_attributes,
                   :is_published,
                   :target_page_id,
+                  :mirror_page_id,
                   :category_ids
   
   cms_acts_as_tree :counter_cache => :children_count

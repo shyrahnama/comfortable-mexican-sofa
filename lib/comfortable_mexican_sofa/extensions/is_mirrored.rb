@@ -23,7 +23,7 @@ module ComfortableMexicanSofa::IsMirrored
       (Cms::Site.mirrored - [self.site]).collect do |site|
         case self
           when Cms::Layout  then site.layouts.find_by_identifier(self.identifier)
-          when Cms::Page    then site.pages.find_by_full_path(self.full_path)
+          when Cms::Page    then site.pages.find_by_full_path(self.full_path) || site.pages.find_by_mirror_page_id(self.id)
           when Cms::Snippet then site.snippets.find_by_identifier(self.identifier)
         end
       end.compact
@@ -47,8 +47,7 @@ module ComfortableMexicanSofa::IsMirrored
         when Cms::Page
           m = site.pages.find_by_full_path(self.full_path_was || self.full_path) || site.pages.new
           m.attributes = {
-            :slug       => self.slug,
-            :label      => self.slug.blank?? self.label : m.label,
+            :mirror_page_id => self.id,
             :parent_id  => site.pages.find_by_full_path(self.parent.try(:full_path)).try(:id),
             :layout     => site.layouts.find_by_identifier(self.layout.try(:identifier))
           }
