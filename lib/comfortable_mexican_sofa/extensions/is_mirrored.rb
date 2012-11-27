@@ -45,7 +45,7 @@ module ComfortableMexicanSofa::IsMirrored
           }
           m
         when Cms::Page
-          m = site.pages.find_by_full_path(self.full_path_was || self.full_path) || site.pages.new
+          m = site.pages.find_by_full_path(self.full_path_was || self.full_path) || site.pages.find_by_mirror_page_id(self.mirror_page_id_was || self.mirror_page_id) || site.pages.new
           m.attributes = {
             :mirror_page_id => m.mirror_page_id.present? ? m.mirror_page_id : self.id,
             :slug       => m.slug.present? ? m.slug : self.slug,
