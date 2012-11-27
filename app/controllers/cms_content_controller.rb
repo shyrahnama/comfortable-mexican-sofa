@@ -54,7 +54,7 @@ protected
       I18n.locale = @cms_site.locale
     else
       I18n.locale = I18n.default_locale
-      raise ActionController::RoutingError.new('Site Not Found')
+      raise ActionController::RoutingError.new('Site Not Found: ' + request.host_with_port.downcase + request.fullpath)
     end
   end
   
