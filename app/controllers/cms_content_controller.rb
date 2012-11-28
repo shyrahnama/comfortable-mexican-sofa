@@ -63,11 +63,11 @@ protected
     return redirect_to(@cms_page.target_page.url) if @cms_page.target_page
     
   rescue ActiveRecord::RecordNotFound
-    if @cms_page = @cms_site.pages.published.find_by_full_path('/404')
-      render_html(404)
+    if ComfortableMexicanSofa.config.alt_catchall_prefix.present?
+      redirect_to "#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
     else
-      if ComfortableMexicanSofa.config.alt_catchall_prefix.present?
-        redirect_to "#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
+      if @cms_page = @cms_site.pages.published.find_by_full_path('/404')
+        render_html(404)
       else
         raise ActionController::RoutingError.new('Page Not Found')
       end
