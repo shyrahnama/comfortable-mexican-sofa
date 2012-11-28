@@ -19,6 +19,9 @@ class ComfortableMexicanSofa::Configuration
   # for example '/cms-admin/users'
   attr_accessor :admin_route_redirect
 
+  # If you want an alternate prefix for catch all (to try after the cms routes)
+  attr_accessor :alt_catchall_prefix
+
   # Normally we include default routes from https://github.com/comfy/comfortable-mexican-sofa/blob/master/config/routes.rb
   # If you want to include the routes manually set this to false
   attr_accessor :use_default_routes
