@@ -65,7 +65,7 @@ module ComfortableMexicanSofa::IsMirrored
         mirror.is_mirrored = true
         begin
           mirror.save!
-          if self.mirror_page_id.blank?
+          if self = Cms::Page && self.mirror_page_id.blank?
             self.attributes = {:mirror_page_id => self.id}
             self.save!
           end
