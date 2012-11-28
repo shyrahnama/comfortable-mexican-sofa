@@ -54,10 +54,11 @@ protected
       I18n.locale = @cms_site.locale
     else
       I18n.locale = I18n.default_locale
-      if ComfortableMexicanSofa.config.alt_catchall_prefix.present?
-        redirect_to "#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
+      if ComfortableMexicanSofa.config.alt_catchall_prefix.present? && params[:cms_path].present? && !params[:cms_path].match(/^#{ComfortableMexicanSofa.config.alt_catchall_prefix}.*$/).present?
+        redirect_to "/#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
+      else
+        raise ActionController::RoutingError.new('Site Not Found: ' + request.host_with_port.downcase + request.fullpath)
       end
-      raise ActionController::RoutingError.new('Site Not Found: ' + request.host_with_port.downcase + request.fullpath)
     end
   end
   
