@@ -83,6 +83,7 @@ class ComfortableMexicanSofa::Configuration
     @seed_data_path       = nil
     @admin_route_prefix   = 'cms-admin'
     @admin_route_redirect = ''
+    @alt_catchall_prefix  = ''
     @use_default_routes   = true
     @enable_sitemap       = true
     @upload_file_options  = { :url => '/system/:class/:id/:attachment/:style/:filename' }

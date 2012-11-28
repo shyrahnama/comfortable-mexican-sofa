@@ -66,7 +66,11 @@ protected
     if @cms_page = @cms_site.pages.published.find_by_full_path('/404')
       render_html(404)
     else
-      raise ActionController::RoutingError.new('Page Not Found')
+      if ComfortableMexicanSofa.config.alternate_catchall_path.present?
+        redirect_to "#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
+      else
+        raise ActionController::RoutingError.new('Page Not Found')
+      end
     end
   end
 
