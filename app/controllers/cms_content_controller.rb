@@ -54,6 +54,9 @@ protected
       I18n.locale = @cms_site.locale
     else
       I18n.locale = I18n.default_locale
+      if ComfortableMexicanSofa.config.alt_catchall_prefix.present?
+        redirect_to "#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
+      end
       raise ActionController::RoutingError.new('Site Not Found: ' + request.host_with_port.downcase + request.fullpath)
     end
   end
@@ -63,14 +66,10 @@ protected
     return redirect_to(@cms_page.target_page.url) if @cms_page.target_page
     
   rescue ActiveRecord::RecordNotFound
-    if ComfortableMexicanSofa.config.alt_catchall_prefix.present?
-      redirect_to "#{ComfortableMexicanSofa.config.alt_catchall_prefix}/#{params[:cms_path]}"
+    if @cms_page = @cms_site.pages.published.find_by_full_path('/404')
+      render_html(404)
     else
-      if @cms_page = @cms_site.pages.published.find_by_full_path('/404')
-        render_html(404)
-      else
-        raise ActionController::RoutingError.new('Page Not Found')
-      end
+      raise ActionController::RoutingError.new('Page Not Found')
     end
   end
 
