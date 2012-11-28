@@ -65,9 +65,12 @@ module ComfortableMexicanSofa::IsMirrored
         mirror.is_mirrored = true
         begin
           mirror.save!
-          if self = Cms::Page && self.mirror_page_id.blank?
-            self.attributes = {:mirror_page_id => self.id}
-            self.save!
+          case self
+          when Cms::Page
+            if self.mirror_page_id.blank?
+              self.attributes = {:mirror_page_id => self.id}
+              self.save!
+            end
           end
         rescue ActiveRecord::RecordInvalid
           logger.detailed_error($!)
